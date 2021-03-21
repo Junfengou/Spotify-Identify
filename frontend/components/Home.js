@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useGlobalState } from "./context/context";
+import UseAuth from "./UseAuth";
 
-function Home() {
+function Home({ code }) {
+	const accessToken = UseAuth(code);
+
+	const { spotifyWebApi } = useGlobalState();
+
+	useEffect(() => {
+		if (!accessToken) return;
+		spotifyWebApi.setAccessToken(accessToken);
+	}, [accessToken]);
+
 	return (
 		<HomeStyles>
 			<div className="content">
 				<div className="profile">what the hell</div>
-				<div className="tracks">woah</div>
+				<div className="tracks"></div>
 			</div>
 		</HomeStyles>
 	);

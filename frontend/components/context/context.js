@@ -1,4 +1,5 @@
-import { useState, useContext, createContext } from "react";
+import { useState, useEffect, useContext, createContext } from "react";
+import SpotifyWebApi from "spotify-web-api-node";
 
 const LocalStateContext = createContext();
 
@@ -17,8 +18,18 @@ function SpotifyStateProvider({ children }) {
 		code = new URLSearchParams(window.location.search).get("code");
 	}
 
+	const spotifyWebApi = new SpotifyWebApi({
+		clientId: "09629ba1686e4156bfbbf321f979e61a",
+	});
+
 	return (
-		<LocalStateProvider value={{ AUTH_URL, code }}>
+		<LocalStateProvider
+			value={{
+				AUTH_URL,
+				code,
+				spotifyWebApi,
+			}}
+		>
 			{children}
 		</LocalStateProvider>
 	);
